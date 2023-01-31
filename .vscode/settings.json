@@ -1,0 +1,22 @@
+{
+    "C_Cpp.intelliSenseEngine": "default",
+    "files.associations": {
+        "gpio.h": "c",
+        "main.h": "c",
+        "spi.h": "c",
+        "stm32g0xx_hal_conf.h": "c",
+        "stm32g0xx_it.h": "c",
+        "tim.h": "c",
+        "usart.h": "c",
+        "cmath": "c",
+        "*.tcc": "c",
+        "cstdlib": "c",
+        "math.h": "c",
+        "stm32g4xx_hal.h": "c",
+        "i2c.h": "c",
+        "cmsis_compiler.h": "c",
+        "cmsis_gcc.h": "c",
+        "bmp280_spi.h": "c"
+    },
+    "cortex-debug.variableUseNaturalFormat": true
+}
