@@ -4,6 +4,7 @@
 #include <stm32g0xx_hal.h>
 #include <spi.h>
 #include <gpio.h>
+#include <math.h>
 
 /**务必注意！选择浮点与定点之前，在.h文件中，请修改USE_FIXED_POINT_COMPENSATE宏定义！**/
 /**使用浮点校正之前，这个宏定义务必被注释。使用定点校正之前，这个宏定义务必添加！**/
@@ -186,6 +187,7 @@ double BMP280_Calc_Temperature(int32_t Original_Temperature,uint8_t Corr_Mode);
 
 double BMP280_Get_Pressure(void);
 double BMP280_Get_Temperature(void);
+double BMP280_Get_Height(double Real_Pressure,double Real_Temperature);
 
 double bmp280_compensate_T_double(int32_t adc_T);
 double bmp280_compensate_P_double(int32_t adc_P);

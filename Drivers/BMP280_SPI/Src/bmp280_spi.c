@@ -294,6 +294,18 @@ double BMP280_Get_Temperature(void){
 }
 
 
+/// @brief Hypsometric算法计算高度,使用温度修正计算结果 
+/// @param Real_Pressure 传感器获得的气压（Pa）
+/// @param Real_Temperature 传感器获得的温度（℃）
+/// @return 高度（m）
+double BMP280_Get_Height(double Real_Pressure,double Real_Temperature){
+    double Height_Value=0;
+    Height_Value=((pow((101.325/(Real_Pressure/1000.0)),(1/5.257))-1)*(Real_Temperature+273.15))/0.0065;
+    return Height_Value;
+}
+
+
+
 /*************************以下函数移植于BMP280 DataSheet************************/
 /**************************传感器值转定点值*************************************/
 int32_t t_fine;			//用于计算补偿

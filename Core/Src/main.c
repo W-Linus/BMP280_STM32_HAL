@@ -47,7 +47,7 @@
 /* USER CODE BEGIN PV */
 uint8_t BMP280_ID=0;
 uint8_t InitStatus=0;
-double Pressure=0,Temperature=0;
+double Pressure=0,Temperature=0,Height=0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -110,7 +110,8 @@ int main(void)
   {
     Pressure=BMP280_Get_Pressure(); //获取气压
     Temperature=BMP280_Get_Temperature(); //获取温度
-    printf("Pressure:%.2fPa, Temperature:%.4fC\r\n",Pressure,Temperature); //打印气压以及温度
+    Height=BMP280_Get_Height(Pressure,Temperature); //获取高度
+    printf("Pressure:%.2fPa, Temperature:%.4fC, Height:%.2fm\r\n",Pressure,Temperature,Height); //打印气压以及温度和高度
     HAL_Delay(10);
     /* USER CODE END WHILE */
 
