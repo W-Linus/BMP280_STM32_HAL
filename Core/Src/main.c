@@ -93,12 +93,12 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
   InitStatus = BMP280_Init(); //初始化传感器
-  if(InitStatus==0){ //回报初始化状态
+  if(InitStatus==0){ //回报初始化状�?
     printf("Initiliazed Success\n");
   }else{
     printf("Initiliazed Failure, Error Code is %d\n",InitStatus);
   }
-  HAL_Delay(100); //等待一会
+  HAL_Delay(100); //等待�?�?
   BMP280_ID=BMP280_GetID(); //获取芯片ID
   printf("BMP280 ID: 0x%x\n", BMP280_ID);//串口打印ID
 
@@ -111,7 +111,7 @@ int main(void)
     Pressure=BMP280_Get_Pressure(); //获取气压
     Temperature=BMP280_Get_Temperature(); //获取温度
     Height=BMP280_Get_Height(Pressure,Temperature); //获取高度
-    printf("Pressure:%.2fPa, Temperature:%.4fC, Height:%.2fm\r\n",Pressure,Temperature,Height); //打印气压以及温度和高度
+    printf("Pressure:%.2fPa, Temperature:%.4fC, Height:%.2fm\r\n",Pressure,Temperature,Height); //打印气压以及温度和高�?
     HAL_Delay(10);
     /* USER CODE END WHILE */
 
@@ -136,11 +136,14 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
-  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-  RCC_OscInitStruct.HSIDiv = RCC_HSI_DIV1;
-  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+  RCC_OscInitStruct.PLL.PLLM = RCC_PLLM_DIV1;
+  RCC_OscInitStruct.PLL.PLLN = 16;
+  RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
+  RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV2;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -150,11 +153,11 @@ void SystemClock_Config(void)
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
   {
     Error_Handler();
   }
