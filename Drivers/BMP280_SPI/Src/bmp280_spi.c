@@ -143,11 +143,16 @@ uint8_t BMP280_Set_IIR_Standby_Time_Mode(BMP280_Configuration_t *Config){
 uint8_t BMP280_Init(void){
     uint8_t Init_Status=0;
 
+    HAL_Delay(20); //添加一个延时，才能完整读出修正系数
+    BMP280_Get_Calibration_Data(); //读取修正系数
+    HAL_Delay(5);
+
     BMP280_Reset(); 
+    HAL_Delay(10);
 
     BMP280_OverSampling_Mode_t BMP280_OverSampStructure;
     BMP280_OverSampStructure.Press_OverSamp =   Press_OverSamp_5;   //设置气压过采样
-    BMP280_OverSampStructure.Temp_OverSamp  =   Temp_OverSamp_2;    //设置温度过采样
+    BMP280_OverSampStructure.Temp_OverSamp  =   Temp_OverSamp_5;    //设置温度过采样
     BMP280_OverSampStructure.Working_Mode   =   BMP280_Normal_Mode; //设置工作模式
 
     Init_Status+=BMP280_Set_OverSamp_Working_Mode(&BMP280_OverSampStructure); //发送设置信息到芯片
@@ -158,9 +163,6 @@ uint8_t BMP280_Init(void){
     BMP280_Config.SPI_3W_ENABLE=DISABLE;       //设置是否使用三线SPI
 
     Init_Status+=BMP280_Set_IIR_Standby_Time_Mode(&BMP280_Config);
-
-    HAL_Delay(20); //添加一个延时，才能完整读出修正系数
-    BMP280_Get_Calibration_Data(); //读取修正系数
 
     if(Init_Status==0){
         return 0;

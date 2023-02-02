@@ -48,6 +48,10 @@
 uint8_t BMP280_ID=0;
 uint8_t InitStatus=0;
 double Pressure=0,Temperature=0,Height=0;
+uint8_t status=0;
+uint8_t Ctrl_Meas=0;
+uint8_t Configer=0;
+int32_t PressOrg=0,TempOrg=0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -92,13 +96,15 @@ int main(void)
   MX_SPI1_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
+  HAL_Delay(20);
   InitStatus = BMP280_Init(); //初始化传感器
-  if(InitStatus==0){ //回报初始化状�?
+
+  if(InitStatus==0){ //回报初始化状态
     printf("Initiliazed Success\n");
   }else{
     printf("Initiliazed Failure, Error Code is %d\n",InitStatus);
   }
-  HAL_Delay(100); //等待�?�?
+  HAL_Delay(100); //等待一下
   BMP280_ID=BMP280_GetID(); //获取芯片ID
   printf("BMP280 ID: 0x%x\n", BMP280_ID);//串口打印ID
 
@@ -111,8 +117,8 @@ int main(void)
     Pressure=BMP280_Get_Pressure(); //获取气压
     Temperature=BMP280_Get_Temperature(); //获取温度
     Height=BMP280_Get_Height(Pressure,Temperature); //获取高度
-    printf("Pressure:%.2fPa, Temperature:%.4fC, Height:%.2fm\r\n",Pressure,Temperature,Height); //打印气压以及温度和高�?
-    HAL_Delay(10);
+    printf("Pressure:%.2fPa, Temperature:%.4fC, Height:%.2fm\r\n",Pressure,Temperature,Height); //打印气压以及温度和高度
+    HAL_Delay(5);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
